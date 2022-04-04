@@ -9,4 +9,5 @@
 "0","    )"
 "0","}"
 "0","res2<-rcorr(as.matrix(DatasetForRProject[,1:9]))"
-"0","flattenCorrMatrix(res2$r, res2$P)"
+"0","Corr <-flattenCorrMatrix(res2$r, res2$P)"
+"0","Corr[ , c(""row"", ""column"",""cor"")]    "
