@@ -1,0 +1,6 @@
+---
+title: "History of Inflation and Wages"
+output: html_document
+---
+
+History below

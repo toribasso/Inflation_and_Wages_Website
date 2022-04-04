@@ -1,0 +1,13 @@
+name: "Wages and Inflation"
+navbar:
+  title: "Wages and Inflation"
+  left:
+    - text: "Home"
+      href: index.html
+    - text: "History of Inflation and Wages"
+      href: about.html
+    - text: "Analysis and Conclusions"
+      href: analysis.html
+output:
+  html_document:
+    theme: cerulean
