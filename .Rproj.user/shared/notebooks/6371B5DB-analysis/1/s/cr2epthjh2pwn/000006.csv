@@ -1,0 +1,4 @@
+"0","library(ggplot2)"
+"0","ggplot(data=DatasetForRProject, aes(x=Year, y=GeneralMedianWage, group=1)) +"
+"0","  geom_line()+"
+"0","  geom_point()"

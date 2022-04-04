@@ -36,10 +36,6 @@ ggplot(data=DatasetForRProject, aes(x=Year, y=GeneralAverageWage, group=1)) +
 This seems like average has less point-to-point variation than the median wage category. 
 
 ```{r InitialCorr}
-#library(GGally)
-#ggscatmat(DatasetForRProject, columns = 1:9,
-#          alpha=0.1)
-#cor(DatasetForRProject)
 library(Hmisc)
 flattenCorrMatrix <- function(cormat, pmat) {
   ut <- upper.tri(cormat)

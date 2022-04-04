@@ -271,7 +271,146 @@ $(document).ready(function () {
 </div>
 
 
-<p>Analysis Below</p>
+<p>Now that you have established that Inflation increasing at a higher rate than wages. Lets see how bad of an issue this seems to be.</p>
+<div id="importing-data" class="section level2">
+<h2>Importing Data</h2>
+<pre class="r"><code>library(readxl)
+DatasetForRProject &lt;- read_excel(&quot;DatasetForRProject.xlsx&quot;)</code></pre>
+</div>
+<div id="descriptive-statistics" class="section level2">
+<h2>Descriptive Statistics</h2>
+<pre class="r"><code>summary(DatasetForRProject)</code></pre>
+<pre><code>##       Year      GeneralMedianWage GeneralAverageWage AverageWage_LessthanHS
+##  Min.   :1973   Min.   :16.61     Min.   :19.83      Min.   :12.34         
+##  1st Qu.:1985   1st Qu.:17.05     1st Qu.:20.35      1st Qu.:13.16         
+##  Median :1996   Median :17.41     Median :21.24      Median :13.50         
+##  Mean   :1996   Mean   :17.83     Mean   :22.38      Mean   :13.86         
+##  3rd Qu.:2008   3rd Qu.:18.62     3rd Qu.:24.08      3rd Qu.:14.39         
+##  Max.   :2020   Max.   :20.92     Max.   :28.78      Max.   :15.98         
+##  AverageWage_Highschool AverageWage_Somecollege AverageWage_Bachelor&#39;sdegree
+##  Min.   :17.36          Min.   :19.50           Min.   :26.57               
+##  1st Qu.:18.03          1st Qu.:19.93           1st Qu.:28.16               
+##  Median :18.41          Median :20.50           Median :29.57               
+##  Mean   :18.42          Mean   :20.48           Mean   :30.51               
+##  3rd Qu.:18.93          3rd Qu.:20.95           3rd Qu.:32.78               
+##  Max.   :20.09          Max.   :22.51           Max.   :36.84               
+##  AverageWage_Advanceddegree ConsumerPriceIndex
+##  Min.   :31.24              Min.   : 42.7     
+##  1st Qu.:33.97              1st Qu.:104.8     
+##  Median :38.55              Median :157.1     
+##  Mean   :38.49              Mean   :154.4     
+##  3rd Qu.:42.02              3rd Qu.:212.0     
+##  Max.   :47.54              Max.   :258.7</code></pre>
+<p>The General Average Wage has much higher measures of spread than median measures of spread. This may indicate that there are large outliers influencing the average wage to be higher. If we look at wages-by-degree, it seems like having a degree is much more helpful for wages than not having a degree.</p>
+<pre class="r"><code>library(ggplot2)
+ggplot(data=DatasetForRProject, aes(x=Year, y=GeneralMedianWage, group=1)) +
+  geom_line()+
+  geom_point()</code></pre>
+<p><img src="analysis_files/figure-html/LineGraphs-1.png" width="672" /></p>
+<pre class="r"><code>ggplot(data=DatasetForRProject, aes(x=Year, y=GeneralAverageWage, group=1)) +
+  geom_line()+
+  geom_point()</code></pre>
+<p><img src="analysis_files/figure-html/LineGraphs-2.png" width="672" /></p>
+<p>This seems like average has less point-to-point variation than the median wage category.</p>
+<pre class="r"><code>#library(GGally)
+#ggscatmat(DatasetForRProject, columns = 1:9,
+#          alpha=0.1)
+#cor(DatasetForRProject)
+library(Hmisc)</code></pre>
+<pre><code>## Loading required package: lattice</code></pre>
+<pre><code>## Loading required package: survival</code></pre>
+<pre><code>## Loading required package: Formula</code></pre>
+<pre><code>## 
+## Attaching package: &#39;Hmisc&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     format.pval, units</code></pre>
+<pre class="r"><code>flattenCorrMatrix &lt;- function(cormat, pmat) {
+  ut &lt;- upper.tri(cormat)
+  data.frame(
+    row = rownames(cormat)[row(cormat)[ut]],
+    column = rownames(cormat)[col(cormat)[ut]],
+    cor  =(cormat)[ut],
+    p = pmat[ut]
+    )
+}
+res2&lt;-rcorr(as.matrix(DatasetForRProject[,1:9]))
+flattenCorrMatrix(res2$r, res2$P)</code></pre>
+<pre><code>##                             row                       column         cor
+## 1                          Year            GeneralMedianWage  0.83832909
+## 2                          Year           GeneralAverageWage  0.93869280
+## 3             GeneralMedianWage           GeneralAverageWage  0.96132484
+## 4                          Year       AverageWage_LessthanHS -0.57634612
+## 5             GeneralMedianWage       AverageWage_LessthanHS -0.16103364
+## 6            GeneralAverageWage       AverageWage_LessthanHS -0.29728610
+## 7                          Year       AverageWage_Highschool  0.06150603
+## 8             GeneralMedianWage       AverageWage_Highschool  0.55545945
+## 9            GeneralAverageWage       AverageWage_Highschool  0.38884246
+## 10       AverageWage_LessthanHS       AverageWage_Highschool  0.65097182
+## 11                         Year      AverageWage_Somecollege  0.34998285
+## 12            GeneralMedianWage      AverageWage_Somecollege  0.77269419
+## 13           GeneralAverageWage      AverageWage_Somecollege  0.60810850
+## 14       AverageWage_LessthanHS      AverageWage_Somecollege  0.23709177
+## 15       AverageWage_Highschool      AverageWage_Somecollege  0.84547884
+## 16                         Year AverageWage_Bachelor&#39;sdegree  0.92673680
+## 17            GeneralMedianWage AverageWage_Bachelor&#39;sdegree  0.95319894
+## 18           GeneralAverageWage AverageWage_Bachelor&#39;sdegree  0.97584316
+## 19       AverageWage_LessthanHS AverageWage_Bachelor&#39;sdegree -0.38594317
+## 20       AverageWage_Highschool AverageWage_Bachelor&#39;sdegree  0.36629779
+## 21      AverageWage_Somecollege AverageWage_Bachelor&#39;sdegree  0.65109544
+## 22                         Year   AverageWage_Advanceddegree  0.96211970
+## 23            GeneralMedianWage   AverageWage_Advanceddegree  0.89820355
+## 24           GeneralAverageWage   AverageWage_Advanceddegree  0.95262204
+## 25       AverageWage_LessthanHS   AverageWage_Advanceddegree -0.53697192
+## 26       AverageWage_Highschool   AverageWage_Advanceddegree  0.20351394
+## 27      AverageWage_Somecollege   AverageWage_Advanceddegree  0.51490106
+## 28 AverageWage_Bachelor&#39;sdegree   AverageWage_Advanceddegree  0.97352155
+## 29                         Year           ConsumerPriceIndex  0.99835114
+## 30            GeneralMedianWage           ConsumerPriceIndex  0.81716732
+## 31           GeneralAverageWage           ConsumerPriceIndex  0.92328562
+## 32       AverageWage_LessthanHS           ConsumerPriceIndex -0.60530401
+## 33       AverageWage_Highschool           ConsumerPriceIndex  0.01881394
+## 34      AverageWage_Somecollege           ConsumerPriceIndex  0.31764249
+## 35 AverageWage_Bachelor&#39;sdegree           ConsumerPriceIndex  0.91234024
+## 36   AverageWage_Advanceddegree           ConsumerPriceIndex  0.95349284
+##               p
+## 1  1.050271e-13
+## 2  0.000000e+00
+## 3  0.000000e+00
+## 4  1.811800e-05
+## 5  2.742094e-01
+## 6  4.016810e-02
+## 7  6.779316e-01
+## 8  4.167399e-05
+## 9  6.307174e-03
+## 10 5.456049e-07
+## 11 1.474812e-02
+## 12 1.244227e-10
+## 13 4.549872e-06
+## 14 1.046858e-01
+## 15 4.041212e-14
+## 16 0.000000e+00
+## 17 0.000000e+00
+## 18 0.000000e+00
+## 19 6.743383e-03
+## 20 1.045012e-02
+## 21 5.420163e-07
+## 22 0.000000e+00
+## 23 0.000000e+00
+## 24 0.000000e+00
+## 25 8.326270e-05
+## 26 1.653236e-01
+## 27 1.807637e-04
+## 28 0.000000e+00
+## 29 0.000000e+00
+## 30 1.395772e-12
+## 31 0.000000e+00
+## 32 5.171345e-06
+## 33 8.990021e-01
+## 34 2.780649e-02
+## 35 0.000000e+00
+## 36 0.000000e+00</code></pre>
+</div>
 
 
 
