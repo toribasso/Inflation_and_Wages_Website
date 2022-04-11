@@ -33,7 +33,9 @@ ggplot(data=DatasetForRProject, aes(x=Year, y=GeneralAverageWage, group=1)) +
   geom_point()
 ```
 
-This seems like average has less point-to-point variation than the median wage category. 
+This seems like average has less point-to-point variation than the median wage category. Overall, it seems like Wages increase over time and sharply over the past 20 years.
+
+##Correlations
 
 ```{r InitialCorr, message=FALSE}
 library(Hmisc)
@@ -51,4 +53,21 @@ Corr <-flattenCorrMatrix(res2$r, res2$P)
 Corr[ , c("row", "column","cor")]    
 ```
 
+There are high correlations between Consumer Price Index and median wage, average wage, Bachelor's 
+Degree, and Advanced Degree. There was not a high correlation with wages for some college, High School,
+and less than High School. This is highly concerning. This means that over time, individuals who
+receive less than a Bachelor's degree are not keeping up with inflation as much as a college degree. 
+Also, the correlation is negative for people who do not have a high school diploma. This
+indicates that as the Consumer Price Index increases over time, people with a high school diploma
+actually have their wages decrease. 
 
+##Conclusions
+
+The results from the correlations were extremely interesting and shed light on our situation in the
+United States. Individuals who have a College Degree seem to have wages that keep up with inflation.
+Those who do not have a degree, but have a high school education, increase over time. But not at the 
+same pace as inflation. The worth of their wages are slowly eroding over time. For those without a 
+high school diploma, their wages actually decrease as inflation increases.
+
+With inflation in the United States at a high in recent history, it seems that those with a college
+diploma will be better off than those without.
