@@ -35,7 +35,7 @@ ggplot(data=DatasetForRProject, aes(x=Year, y=GeneralAverageWage, group=1)) +
 
 This seems like average has less point-to-point variation than the median wage category. Overall, it seems like Wages increase over time and sharply over the past 20 years.
 
-##Correlations
+## Correlations
 
 ```{r InitialCorr, message=FALSE}
 library(Hmisc)
@@ -61,7 +61,7 @@ Also, the correlation is negative for people who do not have a high school diplo
 indicates that as the Consumer Price Index increases over time, people with a high school diploma
 actually have their wages decrease. 
 
-##Conclusions
+## Conclusions
 
 The results from the correlations were extremely interesting and shed light on our situation in the
 United States. Individuals who have a College Degree seem to have wages that keep up with inflation.

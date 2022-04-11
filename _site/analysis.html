@@ -311,7 +311,8 @@ ggplot(data=DatasetForRProject, aes(x=Year, y=GeneralMedianWage, group=1)) +
   geom_line()+
   geom_point()</code></pre>
 <p><img src="analysis_files/figure-html/LineGraphs-2.png" width="672" /></p>
-<p>This seems like average has less point-to-point variation than the median wage category.</p>
+<p>This seems like average has less point-to-point variation than the median wage category. Overall, it seems like Wages increase over time and sharply over the past 20 years.</p>
+<p>##Correlations</p>
 <pre class="r"><code>library(Hmisc)
 flattenCorrMatrix &lt;- function(cormat, pmat) {
   ut &lt;- upper.tri(cormat)
@@ -362,6 +363,10 @@ Corr[ , c(&quot;row&quot;, &quot;column&quot;,&quot;cor&quot;)]    </code></pre>
 ## 34      AverageWage_Somecollege           ConsumerPriceIndex  0.31764249
 ## 35 AverageWage_Bachelor&#39;sdegree           ConsumerPriceIndex  0.91234024
 ## 36   AverageWage_Advanceddegree           ConsumerPriceIndex  0.95349284</code></pre>
+<p>There are high correlations between Consumer Price Index and median wage, average wage, Bachelor’s Degree, and Advanced Degree. There was not a high correlation with wages for some college, High School, and less than High School. This is highly concerning. This means that over time, individuals who receive less than a Bachelor’s degree are not keeping up with inflation as much as a college degree. Also, the correlation is negative for people who do not have a high school diploma. This indicates that as the Consumer Price Index increases over time, people with a high school diploma actually have their wages decrease.</p>
+<p>##Conclusions</p>
+<p>The results from the correlations were extremely interesting and shed light on our situation in the United States. Individuals who have a College Degree seem to have wages that keep up with inflation. Those who do not have a degree, but have a high school education, increase over time. But not at the same pace as inflation. The worth of their wages are slowly eroding over time. For those without a high school diploma, their wages actually decrease as inflation increases.</p>
+<p>With inflation in the United States at a high in recent history, it seems that those with a college diploma will be better off than those without.</p>
 </div>
 
 
